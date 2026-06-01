@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>العالمية للدكور</title>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --gold: #c9a84c;
+      --gold-light: #f0d080;
+      --gold-dark: #8a6a1f;
+      --dark: #0d0b08;
+      --dark2: #181510;
+      --dark3: #221e14;
+      --card-bg: rgba(30, 25, 12, 0.85);
+      --text: #f5e8c8;
+      --text-muted: #a89060;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Tajawal', sans-serif;
+      background: var(--dark);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Background pattern */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 0%, rgba(201,168,76,0.13) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 40% at 80% 80%, rgba(201,168,76,0.07) 0%, transparent 60%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Decorative diamond grid */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        repeating-linear-gradient(45deg, rgba(201,168,76,0.04) 0, rgba(201,168,76,0.04) 1px, transparent 0, transparent 50%),
+        repeating-linear-gradient(-45deg, rgba(201,168,76,0.04) 0, rgba(201,168,76,0.04) 1px, transparent 0, transparent 50%);
+      background-size: 40px 40px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 440px;
+      padding: 40px 20px 60px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+    }
+
+    /* Header ornament */
+    .ornament {
+      width: 120px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      margin-bottom: 28px;
+      position: relative;
+    }
+    .ornament::before, .ornament::after {
+      content: '◆';
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--gold);
+      font-size: 10px;
+    }
+    .ornament::before { left: -14px; }
+    .ornament::after { right: -14px; }
+
+    /* Avatar / Logo */
+    .avatar-wrap {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--gold-dark), var(--gold), var(--gold-light));
+      padding: 3px;
+      margin-bottom: 20px;
+      box-shadow: 0 0 40px rgba(201,168,76,0.3), 0 0 80px rgba(201,168,76,0.1);
+      animation: pulse-glow 3s ease-in-out infinite;
+    }
+    .avatar-inner {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background: var(--dark2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 38px;
+    }
+
+    @keyframes pulse-glow {
+      0%, 100% { box-shadow: 0 0 30px rgba(201,168,76,0.25), 0 0 60px rgba(201,168,76,0.08); }
+      50% { box-shadow: 0 0 50px rgba(201,168,76,0.45), 0 0 100px rgba(201,168,76,0.18); }
+    }
+
+    h1 {
+      font-size: 26px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      background: linear-gradient(135deg, var(--gold-light), var(--gold), var(--gold-dark));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-align: center;
+      margin-bottom: 6px;
+    }
+
+    .tagline {
+      color: var(--text-muted);
+      font-size: 14px;
+      font-weight: 300;
+      margin-bottom: 10px;
+      letter-spacing: 2px;
+      text-align: center;
+    }
+
+    .divider {
+      width: 200px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(201,168,76,0.5), transparent);
+      margin: 18px 0 32px;
+    }
+
+    /* Cards */
+    .links {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .link-card {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 16px 20px;
+      background: var(--card-bg);
+      border: 1px solid rgba(201,168,76,0.18);
+      border-radius: 14px;
+      text-decoration: none;
+      color: var(--text);
+      position: relative;
+      overflow: hidden;
+      transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+      backdrop-filter: blur(10px);
+      cursor: pointer;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: slide-in 0.5s forwards;
+    }
+
+    .link-card:nth-child(1) { animation-delay: 0.1s; }
+    .link-card:nth-child(2) { animation-delay: 0.2s; }
+    .link-card:nth-child(3) { animation-delay: 0.3s; }
+    .link-card:nth-child(4) { animation-delay: 0.4s; }
+    .link-card:nth-child(5) { animation-delay: 0.5s; }
+
+    @keyframes slide-in {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Shimmer effect */
+    .link-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: -100%; right: 0; bottom: 0;
+      background: linear-gradient(90deg, transparent, rgba(201,168,76,0.08), transparent);
+      transition: left 0.5s ease;
+    }
+    .link-card:hover::before { left: 100%; }
+
+    .link-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 14px;
+      background: linear-gradient(135deg, rgba(201,168,76,0.06), transparent);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .link-card:hover::after { opacity: 1; }
+
+    .link-card:hover {
+      border-color: rgba(201,168,76,0.55);
+      transform: translateY(-2px) scale(1.01);
+      box-shadow: 0 8px 32px rgba(201,168,76,0.15), 0 2px 8px rgba(0,0,0,0.4);
+    }
+
+    .icon-wrap {
+      width: 46px;
+      height: 46px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: transform 0.3s;
+    }
+    .link-card:hover .icon-wrap { transform: scale(1.1) rotate(-3deg); }
+
+    .icon-wrap svg { width: 24px; height: 24px; }
+
+    .link-info { flex: 1; text-align: right; }
+    .link-name {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 3px;
+      color: var(--text);
+    }
+    .link-handle {
+      font-size: 12px;
+      color: var(--text-muted);
+      font-weight: 300;
+      direction: ltr;
+      text-align: right;
+    }
+
+    .arrow {
+      color: var(--gold);
+      font-size: 18px;
+      opacity: 0.5;
+      transition: all 0.3s;
+      flex-shrink: 0;
+    }
+    .link-card:hover .arrow { opacity: 1; transform: translateX(-4px); }
+
+    /* Platform colors */
+    .whatsapp .icon-wrap { background: rgba(37,211,102,0.15); }
+    .facebook .icon-wrap { background: rgba(24,119,242,0.15); }
+    .instagram .icon-wrap { background: rgba(228,64,95,0.15); }
+    .tiktok .icon-wrap { background: rgba(255,0,80,0.12); }
+    .telegram .icon-wrap { background: rgba(0,136,204,0.15); }
+
+    /* Footer */
+    .footer {
+      margin-top: 40px;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 12px;
+      opacity: 0.5;
+      letter-spacing: 1px;
+    }
+    .footer-ornament {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      justify-content: center;
+      margin-top: 10px;
+    }
+    .footer-line { width: 40px; height: 1px; background: var(--text-muted); opacity: 0.3; }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%) translateY(80px);
+      background: var(--dark3);
+      border: 1px solid rgba(201,168,76,0.4);
+      color: var(--gold-light);
+      padding: 12px 24px;
+      border-radius: 30px;
+      font-size: 14px;
+      transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1);
+      z-index: 999;
+      white-space: nowrap;
+    }
+    .toast.show { transform: translateX(-50%) translateY(0); }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <div class="ornament"></div>
+
+  <div class="avatar-wrap">
+    <div class="avatar-inner">🏠</div>
+  </div>
+
+  <h1>العالمية للدكور</h1>
+  <p class="tagline">تصميم داخلي راقي</p>
+  <div class="divider"></div>
+
+  <div class="links">
+
+    <!-- WhatsApp -->
+    <a class="link-card whatsapp" href="https://wa.me/9647714406262" target="_blank">
+      <span class="arrow">‹</span>
+      <div class="link-info">
+        <div class="link-name">واتساب</div>
+        <div class="link-handle">07714406262</div>
+      </div>
+      <div class="icon-wrap">
+        <svg viewBox="0 0 24 24" fill="#25d366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      </div>
+    </a>
+
+    <!-- Facebook -->
+    <a class="link-card facebook" href="https://www.facebook.com/share/18XjMVcVpC/" target="_blank">
+      <span class="arrow">‹</span>
+      <div class="link-info">
+        <div class="link-name">فيسبوك</div>
+        <div class="link-handle">العالمية للدكور</div>
+      </div>
+      <div class="icon-wrap">
+        <svg viewBox="0 0 24 24" fill="#1877f2"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+      </div>
+    </a>
+
+    <!-- Instagram -->
+    <a class="link-card instagram" href="https://www.instagram.com/iraq1962iraq" target="_blank">
+      <span class="arrow">‹</span>
+      <div class="link-info">
+        <div class="link-name">إنستاغرام</div>
+        <div class="link-handle">@iraq1962iraq</div>
+      </div>
+      <div class="icon-wrap">
+        <svg viewBox="0 0 24 24" fill="url(#ig-grad)">
+          <defs>
+            <linearGradient id="ig-grad" x1="0%" y1="100%" x2="100%" y2="0%">
+              <stop offset="0%" style="stop-color:#f09433"/>
+              <stop offset="25%" style="stop-color:#e6683c"/>
+              <stop offset="50%" style="stop-color:#dc2743"/>
+              <stop offset="75%" style="stop-color:#cc2366"/>
+              <stop offset="100%" style="stop-color:#bc1888"/>
+            </linearGradient>
+          </defs>
+          <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+        </svg>
+      </div>
+    </a>
+
+    <!-- TikTok -->
+    <a class="link-card tiktok" href="https://www.tiktok.com/@user47730849" target="_blank">
+      <span class="arrow">‹</span>
+      <div class="link-info">
+        <div class="link-name">تيك توك</div>
+        <div class="link-handle">@user47730849</div>
+      </div>
+      <div class="icon-wrap">
+        <svg viewBox="0 0 24 24" fill="white"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.78 1.52V6.73a4.85 4.85 0 01-1.01-.04z"/></svg>
+      </div>
+    </a>
+
+    <!-- Telegram -->
+    <a class="link-card telegram" href="https://t.me/iraq1962iraq" target="_blank">
+      <span class="arrow">‹</span>
+      <div class="link-info">
+        <div class="link-name">تيليغرام</div>
+        <div class="link-handle">@iraq1962iraq</div>
+      </div>
+      <div class="icon-wrap">
+        <svg viewBox="0 0 24 24" fill="#0088cc"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+      </div>
+    </a>
+
+  </div><!-- .links -->
+
+  <div class="footer">
+    <div class="footer-ornament">
+      <div class="footer-line"></div>
+      <span>◆</span>
+      <div class="footer-line"></div>
+    </div>
+    <p style="margin-top:10px;">العالمية للدكور · العراق</p>
+  </div>
+</div>
+
+<div class="toast" id="toast">تم النسخ! ✓</div>
+
+<script>
+  // Copy phone on whatsapp click (fallback)
+  const toast = document.getElementById('toast');
+  function showToast(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 2500);
+  }
+
+  // Ripple effect on click
+  document.querySelectorAll('.link-card').forEach(card => {
+    card.addEventListener('click', function(e) {
+      const ripple = document.createElement('span');
+      ripple.style.cssText = `
+        position:absolute;
+        border-radius:50%;
+        background:rgba(201,168,76,0.25);
+        pointer-events:none;
+        width:10px;height:10px;
+        left:${e.offsetX - 5}px;
+        top:${e.offsetY - 5}px;
+        animation:ripple 0.6s ease-out forwards;
+      `;
+      this.appendChild(ripple);
+      setTimeout(() => ripple.remove(), 700);
+    });
+  });
+
+  const style = document.createElement('style');
+  style.textContent = `@keyframes ripple { to { transform:scale(30); opacity:0; } }`;
+  document.head.appendChild(style);
+</script>
+</body>
+</html>
